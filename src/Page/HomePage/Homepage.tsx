@@ -1,8 +1,18 @@
-import { Avatar, Box, Button, Drawer, Grid, List, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Drawer,
+  Grid,
+  List,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import ListItem from "../../components/ListItem/ListItem";
 import React from "react";
 import { deepOrange } from "@mui/material/colors";
-import Post from "../../components/Post/Post";
+import Post from '../../components/Post/Post';
 // import Counter from '../../components/Counter/Counter';
 // import {CounterFc} from '../../components/Counter/CounterTs';
 
@@ -38,13 +48,14 @@ const Homepage = () => {
             <Grid item xs={8}>
               <Typography component="h6">Tuan Anh</Typography>
               <Typography component="caption">a@gmail.com</Typography>
-              <Button href="/login" >Logout</Button>
+              <Button href="/login">Logout</Button>
             </Grid>
           </Grid>
         </Box>
       </Drawer>
       <Box>
-        <Typography variant='h5' >Feeds</Typography>
+        <Typography variant="h5">Feeds</Typography>
+
         <Post />
       </Box>
     </Box>

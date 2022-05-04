@@ -17,9 +17,10 @@ const TabItem = () => {
         indicatorColor="secondary"
         aria-label="secondary tabs example"
       >
-        <Tab value="one" label="Item One" />
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" />
+        <Tab value="one" label="All" />
+        <Tab value="two" label="Following" />
+        <Tab value="three" label="Newest" />
+        
       </Tabs>
     );
 };

@@ -7,36 +7,64 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { IPost } from "../../interface/post";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { postsCol } from "../../helpers/common";
+import { red } from "@mui/material/colors";
 
 
-const Post = () => {
+interface PostProps {
+  post: IPost;
+}
+
+const Post = (props: PostProps) => {
+  const [isLike, setIsLike] = useState(false);
+
+
+  const addLike = async (postId: string) => {
+    const postDocRef = doc(postsCol, postId);
+
+    if (isLike === false) {
+      await updateDoc(postDocRef, { like: props.post.like + 1 });
+    } else {
+      await updateDoc(postDocRef, { like: props.post.like });
+    }
+    setIsLike(!isLike);
+  };
+  console.log("isLike 1: ", isLike);
   return (
-    <div>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height="140"
-            image={`${process.env.PUBLIC_URL}/images/5291450.jpg`}
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
+    <Card sx={{ maxWidth: 400 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="200"
+          image={`${process.env.PUBLIC_URL}/images/5291450.jpg`}
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Lizard
+          </Typography>
+          <Typography variant="body2" color="text.secondary" noWrap>
+            {props.post.content}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions disableSpacing>
+        <IconButton
+          aria-label="add to favorites"
+          onClick={() => addLike(props.post.id)}
+        >
+          <FavoriteIcon sx={{color: isLike ? red[500] : null}} /> {props.post.like}
+        </IconButton>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
@@ -52,7 +80,6 @@ export default Post;
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
 // }
@@ -66,7 +93,6 @@ export default Post;
 //     duration: theme.transitions.duration.shortest,
 //   }),
 // }));
-
 
 // const Post = () => {
 //   const [expanded, setExpanded] = React.useState(false);
